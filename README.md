@@ -215,13 +215,13 @@ astats/
 
 ## Roadmap
 
-- [x] Day 1 — EDA Agent
-- [x] Day 2 — LLM Orchestrator + CLI + Audit trail
-- [ ] Day 3 — Modeling Agent (sklearn + xgboost + lightgbm)
-- [ ] Day 4 — Inference Agent (statsmodels + pingouin)
-- [ ] Day 5 — Explanation Agent (SHAP + LIME)
-- [ ] Day 6 — Full end-to-end pipeline
-- [ ] Day 7 — Final polish + HTML report
+- [x]  — EDA Agent
+- [x]  — LLM Orchestrator + CLI + Audit trail
+- [ ]  — Modeling Agent (sklearn + xgboost + lightgbm)
+- [ ]  — Inference Agent (statsmodels + pingouin)
+- [ ]  — Explanation Agent (SHAP + LIME)
+- [ ]  — Full end-to-end pipeline
+- [ ]  — Final polish + HTML report
 
 ---
 
