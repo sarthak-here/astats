@@ -1,0 +1,343 @@
+Render HTML: 100%|#####################################################################################| 1/1 [00:00<00:00,  4.92it/s] 
+Render HTML: 100%|#####################################################################################| 1/1 [00:00<00:00,  4.87it/s] 
+
+Export report to file:   0%|                                                                                   | 0/1 [00:00<?, ?it/s] 
+Export report to file: 100%|##########################################################################| 1/1 [00:00<00:00, 202.31it/s] 
+
+✓ Deep profile report → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_profile.html
+✓ Plot → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_distributions.html
+✓ Plot → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_boxplots.html
+✓ Plot → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_correlation.html
+✓ Plot → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_missing.html
+✓ Plot → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_target_dist.html
+✓ Plot → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_quality_gauge.html
+✓ Plot → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_skewness.html
+                                                                                                                                      
+╭─────────────────────╮
+│ AStats — EDA Report │
+│ demo_messy          │
+╰─────────────────────╯
+  Rows             400       
+  Columns          7         
+  Missing cells    3.43%     
+  Duplicates       0         
+  Memory           0.038 MB  
+  Quality score    55.0/100  
+
+             Data quality flags
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Flag                         ┃ Status     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ Missing data                 │ ✓ No       │
+│ Skewed features              │ ⚠ YES      │
+│ Outliers                     │ ⚠ YES      │
+│ Class imbalance              │ ⚠ YES      │
+│ High cardinality             │ ✓ No       │
+│ Multicollinearity            │ ⚠ YES      │
+└──────────────────────────────┴────────────┘
+
+╭─────────────────────────────────────────────────── Orchestrator recommendation ────────────────────────────────────────────────────╮
+│ Approach C                     │
+│ 4 data quality issues detected (skewed features, outliers, class imbalance, multicollinearity). Heavy preprocessing with           │
+│ non-parametric or ensemble approach recommended.                     │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+                                 Column profiles
+┏━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━┳━━━━━━┳━━━━━━━━━┳━━━━━━━━━━┓
+┃ Column    ┃ Type               ┃ Missing ┃ Unique ┃ Skew ┃ Normal? ┃ Outliers ┃
+┡━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━╇━━━━━━━━╇━━━━━━╇━━━━━━━━━╇━━━━━━━━━━┩
+│ age       │ numeric_continuous │   12.0% │    352 │ 1.39 │   No    │       15 │
+│ income    │ numeric_continuous │   12.0% │    352 │ 5.13 │   No    │       13 │
+│ score     │ numeric_continuous │      0% │    400 │ 0.03 │   No    │        0 │
+│ city      │ categorical        │      0% │      5 │    — │    —    │        — │
+│ feature_x │ numeric_continuous │      0% │    400 │ 0.03 │   Yes   │        1 │
+│ label     │ numeric_discrete   │      0% │      2 │ 2.42 │   No    │       46 │
+│ feature_y │ numeric_continuous │      0% │    400 │ 0.03 │   Yes   │        0 │
+└───────────┴────────────────────┴─────────┴────────┴──────┴─────────┴──────────┘
+
+Outputs saved to: astats_output/orchestrator_demo\demo_messy\20260325_234024/
+
+✓ EDA report (JSON) → astats_output/orchestrator_demo\demo_messy\20260325_234024\demo_messy_eda_report.json
+  ✓ EDA complete — quality score: 55.0/100
+
+Step 2 — LLM reasoning...
+  ✓ LLM reasoning complete (24.1s)
+
+Step 3 — Selecting approach...
+  ✓ Approach C selected (confidence: medium)
+
+Step 4 — Building preprocessing plan...
+  ✓ Preprocessing plan ready
+
+Step 5 — Validating plan...
+  ✓ Plan validated — no issues
+
+✓ Workflow state saved → astats_output/orchestrator_demo\demo_messy\20260325_234024\workflow_state.json
+
+──────────────────────────────────────────────────────── Orchestrator Summary ────────────────────────────────────────────────────────
+ Step                          Decision                                   LLM        Time 
+ eda                           EDA complete                                N        4.21s
+ llm_reasoning                 LLM analysis complete                       Y      24.078s
+ approach_selection            Approach C selected (confidence: medium)    Y       4.829s
+ preprocessing_plan            Preprocessing plan finalised                Y       5.893s
+ validation                    Validation passed                           N       0.001s
+
+╭─────────────────────────────────────────────────────── Final workflow plan ────────────────────────────────────────────────────────╮
+│ Approach C                     │
+│                                                                                                                                    │
+│ Preprocessing plan:                     │
+│   Handle Missing: median                     │
+│   Handle Outliers: winsorize                     │
+│   Handle Skewness: yeo_johnson                     │
+│   Handle Imbalance: smote                     │
+│   Handle Multicollinearity: drop_vif                     │
+│   Scaling: robust                     │
+│   Encoding: onehot                     │
+│                                                                                                                                    │
+│ Run ID: 20260325_234024                     │
+│ Output: astats_output/orchestrator_demo\demo_messy\20260325_234024                     │
+╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+(.venv) PS C:\Users\sarthak\Desktop\eda_agent> 
+ *  History restored 
+
+PS C:\Users\sarthak\Desktop\eda_agent> echo "# astats" >> README.md
+PS C:\Users\sarthak\Desktop\eda_agent> echo "# astats" >> README.md
+PS C:\Users\sarthak\Desktop\eda_agent> git init
+Initialized empty Git repository in C:/Users/sarthak/Desktop/eda_agent/.git/
+PS C:\Users\sarthak\Desktop\eda_agent> git add README.md
+PS C:\Users\sarthak\Desktop\eda_agent> git commit -m "first commit"
+[master (root-commit) 7b5dd35] first commit
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 README.md
+PS C:\Users\sarthak\Desktop\eda_agent> git remote add origin https://github.com/sarthak-here/astats.git
+PS C:\Users\sarthak\Desktop\eda_agent> git branch -M main
+PS C:\Users\sarthak\Desktop\eda_agent> git push -u origin main
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Delta compression using up to 16 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 3.16 KiB | 3.16 MiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/sarthak-here/astats.git
+ * [new branch]      main -> main
+branch 'main' set up to track 'origin/main'.
+PS C:\Users\sarthak\Desktop\eda_agent> .venv\Scripts\activate
+(.venv) PS C:\Users\sarthak\Desktop\eda_agent> python -u orchestrator.py
+Running in demo mode — use 'python orchestrator.py --help' for CLI usage
+
+✓ LLM online — llama3.1:8b
+
+──────────────────────── AStats Orchestrator — demo_messy ─────────────────────────
+
+Step 1 — Running EDA Agent...
+Summarize dataset:   0%|                                    | 0/5 [00:00<?, ?it/s] 
+Summarize dataset:   0%|           | 0/12 [00:00<?, ?it/s, Describe variable: age] 
+Summarize dataset:   0%|        | 0/12 [00:00<?, ?it/s, Describe variable: income] 
+Summarize dataset:   0%|         | 0/12 [00:00<?, ?it/s, Describe variable: score] 
+Summarize dataset:   0%|          | 0/12 [00:00<?, ?it/s, Describe variable: city] 
+Summarize dataset:   0%|     | 0/12 [00:00<?, ?it/s, Describe variable: feature_x] 
+Summarize dataset:   8%| | 1/12 [00:00<00:00, 20.83it/s, Describe variable: label] 
+Summarize dataset:   8%| | 1/12 [00:00<00:00, 17.54it/s, Describe variable: featur 
+
+  0%|                                                       | 0/7 [00:00<?, ?it/s] 
+[A
+100%|##############################################| 7/7 [00:00<00:00, 350.00it/s] 
+
+Summarize dataset:  58%|####   | 7/12 [00:00<00:00, 69.30it/s, Get variable types] 
+Summarize dataset:  62%|####3  | 8/13 [00:00<00:00, 76.92it/s, Get variable types] 
+Summarize dataset:  62%|6| 8/13 [00:00<00:00, 76.92it/s, Get dataframe statistics] 
+Summarize dataset:  64%|6| 9/14 [00:00<00:00, 76.92it/s, Calculate auto correlatio 
+Summarize dataset:  71%|####2 | 10/14 [00:00<00:00, 76.92it/s, Get scatter matrix] 
+Summarize dataset:  26%|##      | 10/39 [00:00<00:00, 76.92it/s, scatter age, age] 
+Summarize dataset:  28%|#4   | 11/39 [00:00<00:00, 76.92it/s, scatter income, age] 
+Summarize dataset:  31%|#8    | 12/39 [00:00<00:00, 76.92it/s, scatter score, age] 
+Summarize dataset:  33%|6 | 13/39 [00:00<00:00, 76.92it/s, scatter feature_x, age] 
+Summarize dataset:  36%|7 | 14/39 [00:00<00:00, 76.92it/s, scatter feature_y, age] 
+Summarize dataset:  38%|#9   | 15/39 [00:00<00:00, 76.92it/s, scatter age, income] 
+Summarize dataset:  41%|##   | 16/39 [00:00<00:01, 21.94it/s, scatter age, income] 
+Summarize dataset:  41%|8 | 16/39 [00:00<00:01, 21.94it/s, scatter income, income] 
+Summarize dataset:  44%|#3 | 17/39 [00:00<00:01, 21.94it/s, scatter score, income] 
+Summarize dataset:  46%|4| 18/39 [00:00<00:00, 21.94it/s, scatter feature_x, incom 
+Summarize dataset:  49%|4| 19/39 [00:00<00:00, 21.94it/s, scatter feature_y, incom 
+Summarize dataset:  51%|###   | 20/39 [00:00<00:00, 21.94it/s, scatter age, score] 
+Summarize dataset:  54%|###2  | 21/39 [00:00<00:00, 19.65it/s, scatter age, score] 
+Summarize dataset:  54%|#6 | 21/39 [00:00<00:00, 19.65it/s, scatter income, score] 
+Summarize dataset:  56%|##2 | 22/39 [00:01<00:00, 19.65it/s, scatter score, score] 
+Summarize dataset:  59%|5| 23/39 [00:01<00:00, 19.65it/s, scatter feature_x, score 
+Summarize dataset:  62%|6| 24/39 [00:01<00:00, 19.20it/s, scatter feature_x, score 
+Summarize dataset:  62%|6| 24/39 [00:01<00:00, 19.20it/s, scatter feature_y, score 
+Summarize dataset:  64%|#2| 25/39 [00:01<00:00, 19.20it/s, scatter age, feature_x] 
+Summarize dataset:  67%|6| 26/39 [00:01<00:00, 19.20it/s, scatter income, feature_ 
+Summarize dataset:  69%|6| 27/39 [00:01<00:00, 18.65it/s, scatter income, feature_ 
+Summarize dataset:  69%|6| 27/39 [00:01<00:00, 18.65it/s, scatter score, feature_x 
+Summarize dataset:  72%|7| 28/39 [00:01<00:00, 18.65it/s, scatter feature_x, featu 
+Summarize dataset:  74%|7| 29/39 [00:01<00:00, 18.65it/s, scatter feature_y, featu 
+Summarize dataset:  77%|7| 30/39 [00:01<00:00, 18.21it/s, scatter feature_y, featu 
+Summarize dataset:  77%|#5| 30/39 [00:01<00:00, 18.21it/s, scatter age, feature_y] 
+Summarize dataset:  79%|7| 31/39 [00:01<00:00, 18.21it/s, scatter income, feature_ 
+Summarize dataset:  82%|8| 32/39 [00:01<00:00, 18.21it/s, scatter score, feature_y 
+Summarize dataset:  85%|8| 33/39 [00:01<00:00, 17.65it/s, scatter score, feature_y 
+Summarize dataset:  85%|8| 33/39 [00:01<00:00, 17.65it/s, scatter feature_x, featu 
+Summarize dataset:  87%|8| 34/39 [00:01<00:00, 17.65it/s, scatter feature_y, featu 
+Summarize dataset:  90%|8| 35/39 [00:01<00:00, 17.63it/s, scatter feature_y, featu 
+Summarize dataset:  83%|####1| 35/42 [00:01<00:00, 17.63it/s, Missing diagram bar] 
+Summarize dataset:  86%|#7| 36/42 [00:01<00:00, 17.63it/s, Missing diagram matrix] 
+Summarize dataset:  88%|#7| 37/42 [00:01<00:00, 16.40it/s, Missing diagram matrix] 
+Summarize dataset:  88%|8| 37/42 [00:01<00:00, 16.40it/s, Missing diagram heatmap] 
+Summarize dataset:  90%|###########7 | 38/42 [00:02<00:00, 16.40it/s, Take sample] 
+Summarize dataset:  93%|###7| 39/42 [00:02<00:00, 16.40it/s, Detecting duplicates] 
+Summarize dataset:  95%|#############3| 40/42 [00:02<00:00, 16.40it/s, Get alerts] 
+Summarize dataset:  98%|9| 41/42 [00:02<00:00, 16.40it/s, Get reproduction details 
+Summarize dataset: 100%|###############| 42/42 [00:02<00:00, 16.40it/s, Completed] 
+Summarize dataset: 100%|###############| 42/42 [00:02<00:00, 20.79it/s, Completed] 
+
+Generate report structure:   0%|                            | 0/1 [00:00<?, ?it/s] 
+Generate report structure: 100%|####################| 1/1 [00:01<00:00,  1.39s/it] 
+Generate report structure: 100%|####################| 1/1 [00:01<00:00,  1.39s/it] 
+
+Render HTML:   0%|                                          | 0/1 [00:00<?, ?it/s] 
+Render HTML: 100%|##################################| 1/1 [00:00<00:00,  3.94it/s] 
+Render HTML: 100%|##################################| 1/1 [00:00<00:00,  3.92it/s] 
+
+Export report to file:   0%|                                | 0/1 [00:00<?, ?it/s] 
+Export report to file: 100%|#######################| 1/1 [00:00<00:00, 200.48it/s] 
+
+✓ Deep profile report →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_profile.html 
+✓ Plot →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_distributions
+.html
+✓ Plot →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_boxplots.html
+✓ Plot →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_correlation.h
+tml
+✓ Plot →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_missing.html 
+✓ Plot →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_target_dist.h
+tml
+✓ Plot →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_quality_gauge
+.html
+✓ Plot →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_skewness.html
+                                                                                   
+╭─────────────────────╮
+│ AStats — EDA Report │
+│ demo_messy          │
+╰─────────────────────╯
+  Rows             400       
+  Columns          7         
+  Missing cells    3.43%     
+  Duplicates       0         
+  Memory           0.038 MB  
+  Quality score    55.0/100  
+
+             Data quality flags
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━┓
+┃ Flag                         ┃ Status     ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━┩
+│ Missing data                 │ ✓ No       │
+│ Skewed features              │ ⚠ YES      │
+│ Outliers                     │ ⚠ YES      │
+│ Class imbalance              │ ⚠ YES      │
+│ High cardinality             │ ✓ No       │
+│ Multicollinearity            │ ⚠ YES      │
+└──────────────────────────────┴────────────┘
+
+╭────────────────────────── Orchestrator recommendation ──────────────────────────╮
+│ Approach C                                                                      │
+│ 4 data quality issues detected (skewed features, outliers, class imbalance,     │
+│ multicollinearity). Heavy preprocessing with non-parametric or ensemble         │
+│ approach recommended.                                                           │
+╰─────────────────────────────────────────────────────────────────────────────────╯
+                                 Column profiles                               0 │
+│ city      │ categorical        │      0% │      5 │    — │    —    │        — │
+│ feature_x │ numeric_continuous │      0% │    400 │ 0.03 │   Yes   │        1 │
+│ label     │ numeric_discrete   │      0% │      2 │ 2.42 │   No    │       46 │
+│ feature_y │ numeric_continuous │      0% │    400 │ 0.03 │   Yes   │        0 │
+└───────────┴────────────────────┴─────────┴────────┴──────┴─────────┴──────────┘
+
+Outputs saved to: astats_output/orchestrator_demo\demo_messy\20260327_035605/
+
+✓ EDA report (JSON) →
+astats_output/orchestrator_demo\demo_messy\20260327_035605\demo_messy_eda_report.js
+on
+  ✓ EDA complete — quality score: 55.0/100
+
+Step 2 — LLM reasoning...
+  ✓ LLM reasoning complete (20.1s)
+
+ approach_selection         Approach B selected (confidence:       Y   5.07…       
+                            high)                                 
+ preprocessing_plan         Preprocessing plan finalised           Y   6.21…       
+ validation                 Validation passed                      N    0.0s       
+
+╭─────────────────────────── Final workflow plan ───────────────────────────╮      
+│ Approach B                                                                │      
+│                                                                           │      
+│ Preprocessing plan:                                                       │      
+│   Handle Missing: median                                                  │      
+ approach_selection         Approach B selected (confidence:       Y   5.07…   
+                            high)                                 
+ preprocessing_plan         Preprocessing plan finalised           Y   6.21…   
+ validation                 Validation passed                      N    0.0s   
+
+╭─────────────────────────── Final workflow plan ───────────────────────────╮  
+│ Approach B                                                                │  
+│                                                                           │  
+│ Preprocessing plan:                                                       │  
+│   Handle Missing: median                                                  │  
+ approach_selection         Approach B selected (confidence:       Y   5.07…
+                            high)                               
+ preprocessing_plan         Preprocessing plan finalised           Y   6.21…
+ validation                 Validation passed                      N    0.0s
+
+╭─────────────────────────── Final workflow plan ───────────────────────────╮
+│ Approach B                                                    
+ approach_selection         Approach B selected (confidence:       Y   5.07…
+                            high)                       
+ preprocessing_plan         Preprocessing plan finalised           Y   6.21…
+ validation                 Validation passed                      N    0.0s
+
+╭─────────────────────────── Final workflow plan ───────────────────────────╮
+│ Approach B                                            
+ validation                 Validation passed                      N    0.0s
+
+╭─────────────────────────── Final workflow plan ───────────────────────────╮
+│ Approach B                                            
+
+╭─────────────────────────── Final workflow plan ───────────────────────────╮
+│ Approach B                                            
+╭─────────────────────────── Final workflow plan ───────────────────────────╮
+│ Approach B                                            
+│ Approach B                                            
+                    │
+                    │
+│                                                       
+                    │
+│ Preprocessing plan:                                   
+                    │
+│ Preprocessing plan:                                   
+                    │
+│   Handle Missing: median                              
+                    │
+│   Handle Missing: median                              
+                    │
+│   Handle Missing: median                              
+                    │
+│   Handle Outliers: winsorize                          
+                    │
+│   Handle Outliers: winsorize                          
+│   Handle Outliers: winsorize                          
+                    │
+                    │
+                    │
+│   Handle Imbalance: smote                                                 │
+│   Handle Multicollinearity: drop_vif                                      │
+│   Scaling: robust                                                         │
+│   Encoding: onehot                                                        │
+│                                                                           │
+│ Run ID: 20260327_035605                                                   │
+│ Output: astats_output/orchestrator_demo\demo_messy\20260327_035605        │
+╰───────────────────────────────────────────────────────────────────────────╯
