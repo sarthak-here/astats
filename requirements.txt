@@ -1,0 +1,38 @@
+# AStats — GSoC 2026 Project #33
+# Install with: pip install -r requirements.txt
+
+# Core data
+pandas>=2.0
+numpy>=1.24
+scipy>=1.11
+
+# EDA
+ydata-profiling>=4.6
+
+# Modeling
+scikit-learn>=1.3
+xgboost>=2.0
+lightgbm>=4.0
+
+# Statistics & inference
+statsmodels>=0.14
+pingouin>=0.5
+
+# Explainability
+shap>=0.44
+lime>=0.2
+
+# Visualization
+plotly>=5.18
+matplotlib>=3.7
+kaleido>=0.2          # for saving plotly as PNG/PDF
+
+# LLM interface (Day 6) — free tier, no credit card
+groq>=0.9
+
+# CLI & terminal
+typer>=0.12
+rich>=13.0
+
+# Report templating
+jinja2>=3.1

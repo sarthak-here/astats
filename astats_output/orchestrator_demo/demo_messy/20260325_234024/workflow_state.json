@@ -1,0 +1,93 @@
+{
+  "run_id": "20260325_234024",
+  "dataset_name": "demo_messy",
+  "created_at": "2026-03-25T23:40:24.099479",
+  "target_column": "label",
+  "eda_report_path": "astats_output/orchestrator_demo\\demo_messy\\20260325_234024\\demo_messy_eda_report.json",
+  "eda_summary": {
+    "n_rows": 400,
+    "n_cols": 7,
+    "quality_score": 55.0,
+    "target_type": "classification",
+    "has_missing": false,
+    "has_outliers": true,
+    "has_skew": true,
+    "has_imbalance": true,
+    "has_multicollinearity": true,
+    "eda_approach": "C"
+  },
+  "approach": "C",
+  "preprocessing_plan": {
+    "handle_missing": "median",
+    "handle_outliers": "winsorize",
+    "handle_skewness": "yeo_johnson",
+    "handle_imbalance": "smote",
+    "handle_multicollinearity": "drop_vif",
+    "scaling": "robust",
+    "encoding": "onehot"
+  },
+  "llm_reasoning": "**Critical Preprocessing Steps:**\n\n1. **Handling Skewed Features**: Apply logarithmic transformation or power transformation (e.g., Box-Cox) on `age`, `income`, and `label` columns due to high skewness.\n2. **Outlier Handling**: Remove or transform outliers in `age` and `income` columns, as they may significantly impact model performance.\n3. **Class Imbalance**: Apply oversampling (e.g., SMOTE), undersampling, or cost-sensitive learning to address the class imbalance issue.\n\n**Recommended Modeling Approach:**\n\nB) Robust/Regularized: Given the presence of outliers, high cardinality is not an issue, and multicollinearity is a concern. Regularization techniques (e.g., L1/L2 regularization, Elastic Net) can help mitigate multicollinearity while providing robustness to outliers.\n\n**Key Statistical Risks:**\n\n1. **Multicollinearity**: Monitor correlation between features and consider dimensionality reduction techniques (e.g., PCA, t-SNE).\n2. **Overfitting**: Regularization techniques will help, but also monitor model performance on unseen data.\n3. **Model Interpretability**: Due to the presence of outliers and skewed features, interpret results with caution, focusing on feature importance rather than individual coefficients.\n\n**JSON Response:**\n```json\n{\n  \"preprocessing\": {\n    \"skewed_features\": [\"age\", \"income\", \"label\"],\n    \"outlier_handling\": [\"remove/transform\", \"age\", \"income\"]\n  },\n  \"modeling_approach\": \"B\",\n  \"statistical_risks\": [\n    {\"risk\": \"multicollinearity\"},\n    {\"risk\": \"overfitting\"},\n    {\"risk\": \"model_interpretability\"}\n  ]\n}\n```",
+  "steps_completed": [
+    "eda",
+    "preprocessing"
+  ],
+  "steps_pending": [
+    "modeling",
+    "inference",
+    "explanation",
+    "report"
+  ],
+  "audit_trail": [
+    {
+      "timestamp": "2026-03-25T23:40:28.310225",
+      "step": "eda",
+      "decision": "EDA complete",
+      "rationale": "Quality score: 55.0/100. EDA recommended approach C.",
+      "llm_used": false,
+      "llm_model": "",
+      "duration_sec": 4.21
+    },
+    {
+      "timestamp": "2026-03-25T23:40:52.389140",
+      "step": "llm_reasoning",
+      "decision": "LLM analysis complete",
+      "rationale": "**Critical Preprocessing Steps:**\n\n1. **Handling Skewed Features**: Apply logarithmic transformation or power transformation (e.g., Box-Cox) on `age`, `income`, and `label` columns due to high skewnes...",
+      "llm_used": true,
+      "llm_model": "llama3.1:8b",
+      "duration_sec": 24.078
+    },
+    {
+      "timestamp": "2026-03-25T23:40:57.220114",
+      "step": "approach_selection",
+      "decision": "Approach C selected (confidence: medium)",
+      "rationale": "Multiple critical issues, including high skewness, outliers, and class imbalance, necessitate an ensemble/non-parametric approach",
+      "llm_used": true,
+      "llm_model": "llama3.1:8b",
+      "duration_sec": 4.829
+    },
+    {
+      "timestamp": "2026-03-25T23:41:03.115471",
+      "step": "preprocessing_plan",
+      "decision": "Preprocessing plan finalised",
+      "rationale": "{\n  \"handle_missing\": \"median\",\n  \"handle_outliers\": \"winsorize\",\n  \"handle_skewness\": \"yeo_johnson\",\n  \"handle_imbalance\": \"smote\",\n  \"handle_multicollinearity\": \"drop_vif\",\n  \"scaling\": \"robust\",\n  \"encoding\": \"onehot\"\n}",
+      "llm_used": true,
+      "llm_model": "llama3.1:8b",
+      "duration_sec": 5.893
+    },
+    {
+      "timestamp": "2026-03-25T23:41:03.117074",
+      "step": "validation",
+      "decision": "Validation passed",
+      "rationale": "All checks passed.",
+      "llm_used": false,
+      "llm_model": "",
+      "duration_sec": 0.001
+    }
+  ],
+  "modeling_results": {},
+  "inference_results": {},
+  "explanation_results": {},
+  "final_report_path": "",
+  "output_dir": "astats_output/orchestrator_demo\\demo_messy\\20260325_234024",
+  "status": "orchestrated"
+}
