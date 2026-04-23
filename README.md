@@ -1,4 +1,9 @@
 # AStats — Agentic AI for Applied Statistical Workflows
+> **[System Design](./systemdesign.md)** - Architecture, data flow, and how it works end-to-end
+
+---
+
+
 > GSoC 2026 Project #33 | INCF / University of Wisconsin-Madison
 
 AStats is an agentic AI system that automates applied statistical workflows. It combines specialized AI agents with a local LLM (Llama 3.1) to profile datasets, reason about data quality, and build reproducible preprocessing pipelines — all with a full audit trail of every decision.
